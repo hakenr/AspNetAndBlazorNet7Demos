@@ -1,0 +1,32 @@
+﻿@page "/output-caching"
+@inject HttpClient HttpClient
+
+<h3>OutputCaching</h3>
+
+<p class="mb-3">
+    See:
+    <ul>
+        <li><code>Server/Startup.cs</code> (registration + Minimal API)</li>
+        <li><code>Server/Controllers/OutputCacheController.cs</code></li>
+    </ul>
+</p>
+
+<h2>Demo</h2>
+<p><code>/outputcache/cached</code> response: <strong>@cachedApiResult</strong></p>
+<p><code>/outputcache/no-cache</code> response: <strong>@noCacheApiResult</strong></p>
+
+<HxButton Text="Refresh" Color="ThemeColor.Primary" OnClick="RefreshData" />
+
+<p class="mt-4">See the F12-DevTools - Network activity for timing of the requests.</p>
+<p>More demos: <a href="https://github.com/dotnet/aspnetcore/blob/main/src/Middleware/OutputCaching/samples/OutputCachingSample/Startup.cs" target="_blank">https://github.com/dotnet/aspnetcore/blob/main/src/Middleware/OutputCaching/samples/OutputCachingSample/Startup.cs</a></p>
+
+@code {
+    private string? cachedApiResult;
+    private string? noCacheApiResult;
+
+    private async Task RefreshData()
+    {
+        cachedApiResult = await HttpClient.GetStringAsync("/outputcache/cached");
+        noCacheApiResult = await HttpClient.GetStringAsync("/outputcache/no-cache");
+    }
+}
