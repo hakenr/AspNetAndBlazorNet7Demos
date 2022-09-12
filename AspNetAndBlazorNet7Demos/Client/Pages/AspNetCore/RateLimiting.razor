@@ -1,0 +1,34 @@
+﻿@page "/rate-limiting"
+@inject HttpClient HttpClient
+
+<h3>Rate limiting</h3>
+
+<p class="mb-3">
+    See:
+    <ul>
+        <li><code>Server/Startup.cs</code> (registration + Minimal API)</li>
+    </ul>
+</p>
+
+<h2>Demo</h2>
+<p><code>/rate-limiter</code> response: <strong>@apiResult</strong></p>
+
+<HxButton Text="Refresh" Color="ThemeColor.Primary" OnClick="RefreshData" />
+
+<p class="mt-4">See the F12-DevTools - Network activity for timing of the requests.</p>
+
+@code {
+    private string? apiResult;
+
+    private async Task RefreshData()
+    {
+        try
+        {
+            apiResult = await HttpClient.GetStringAsync("/rate-limiter");
+        }
+        catch (HttpRequestException ex)
+        {
+            apiResult = ex.StatusCode.ToString();
+        }
+    }
+}

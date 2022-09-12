@@ -1,3 +1,6 @@
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AspNetAndBlazorNet7Demos
 {
 	public class Program
@@ -32,6 +35,25 @@ namespace AspNetAndBlazorNet7Demos
 
 			app.UseRouting();
 
+			app.UseRateLimiter(new RateLimiterOptions()
+			{
+				GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+				{
+					if (!context.Request.Path.StartsWithSegments("/rate-limiter"))
+					{
+						return RateLimitPartition.CreateNoLimiter("UnlimitedRequests");
+					}
+
+					return RateLimitPartition.CreateFixedWindowLimiter("GeneralLimit",
+						_ => new FixedWindowRateLimiterOptions(
+							permitLimit: 2,
+							queueProcessingOrder: QueueProcessingOrder.OldestFirst,
+							queueLimit: 10,  // try changing the limit to 0
+							window: TimeSpan.FromSeconds(5)));
+				}),
+				RejectionStatusCode = 429 // Too Many Requests
+			});
+
 			app.UseOutputCache();
 
 			app.MapRazorPages();
@@ -39,6 +61,8 @@ namespace AspNetAndBlazorNet7Demos
 
 			app.MapGet("/outputcache/minimal-api", () => DateTime.Now.ToString())
 				.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5))); // MinimalAPI caching
+
+			app.MapGet("/rate-limiter", () => DateTime.Now.ToString());
 
 			app.MapFallbackToPage("/_Host");
 
