@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.ResponseCompression;
-
 namespace AspNetAndBlazorNet7Demos
 {
 	public class Program
@@ -37,7 +35,7 @@ namespace AspNetAndBlazorNet7Demos
 
 			app.MapRazorPages();
 			app.MapControllers();
-			app.MapFallbackToFile("index.html");
+			app.MapFallbackToPage("/_Host");
 
 			app.Run();
 		}

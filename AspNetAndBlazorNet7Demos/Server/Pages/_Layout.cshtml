@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@namespace AspNetAndBlazorNet7Demos.Server.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html>
+<head translate="no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="author" content="Developed by HAVIT, https://www.havit.cz" />
+
+    <title>ASP.NET Core and Blazor in .NET 7</title>
+    <base href="/" />
+
+    <link href="_content/Havit.Blazor.Components.Web.Bootstrap/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+    <link href="_content/Havit.Blazor.Components.Web.Bootstrap/defaults.css" rel="stylesheet" asp-append-version="true" />
+    <link href="AspNetAndBlazorNet7Demos.Client.styles.css" rel="stylesheet" asp-append-version="true" /> <!-- CSS Isolation -->
+    <link href="css/app.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+
+<body>
+    @RenderBody()
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">&times;</a>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
