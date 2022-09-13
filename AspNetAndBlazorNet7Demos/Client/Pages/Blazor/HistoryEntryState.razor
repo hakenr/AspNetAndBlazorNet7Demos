@@ -1,0 +1,17 @@
+﻿@page "/history-entry-state"
+@inject NavigationManager NavigationManager
+
+<h3>History Entry State</h3>
+
+<HxInputText Label="Search query" @bind-Value="query" CssClass="mb-2" />
+<HxButton Text="Search" OnClick="HandleSearchClick" Color="ThemeColor.Primary" />
+
+@code {
+    private string? query;
+
+    private void HandleSearchClick()
+    {
+        NavigationManager.NavigateTo("history-entry-state/search", new NavigationOptions() { HistoryEntryState = query });
+    }
+
+}

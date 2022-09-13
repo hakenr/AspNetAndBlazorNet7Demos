@@ -1,0 +1,20 @@
+﻿@page "/history-entry-state/search"
+@inject NavigationManager NavigationManager
+
+<h3>Search Results</h3>
+
+<p>Dsplaying results for the query: <strong>@query</strong></p>
+
+<p>Try to go <a href="">anywhere else</a> and return <i>Back</i>.</p>
+
+@code {
+    private string? query;
+
+    protected override void OnInitialized()
+    {
+        query = NavigationManager.HistoryEntryState;
+    }
+
+    // just for demo-purposes, query-string should be used in this scenario
+    // not able to receive new history state when navigating to self (not triggering component rerendering)
+}
