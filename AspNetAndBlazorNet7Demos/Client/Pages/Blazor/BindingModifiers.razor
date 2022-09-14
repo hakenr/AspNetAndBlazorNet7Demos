@@ -1,0 +1,22 @@
+﻿@page "/binding-modifiers"
+<h3>Binding Modifiers</h3>
+
+<HxInputText Label="First name" @bind-Value="firstName" @bind-Value:after="SaveChanges" />
+<HxInputText Label="Second name" @bind-Value="secondName" @bind-Value:after="SaveChanges" />
+<HxInputText Label="Third name" @bind-Value="thirdName" @bind-Value:after="SaveChanges" />
+
+<p>@status</p>
+
+@code {
+    string? firstName;
+    string? secondName;
+    string? thirdName;
+    string? status;
+
+    private async Task SaveChanges()
+    {
+        status = "Saving...";
+        await Task.Delay(1000); // simulate server call
+        status = "Saved.";
+    }
+}
