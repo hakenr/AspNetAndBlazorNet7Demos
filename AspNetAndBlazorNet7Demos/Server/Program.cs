@@ -41,15 +41,17 @@ namespace AspNetAndBlazorNet7Demos
 				{
 					if (!context.Request.Path.StartsWithSegments("/rate-limiter"))
 					{
-						return RateLimitPartition.CreateNoLimiter("UnlimitedRequests");
+						return RateLimitPartition.GetNoLimiter("UnlimitedRequests");
 					}
 
-					return RateLimitPartition.CreateFixedWindowLimiter("GeneralLimit",
-						_ => new FixedWindowRateLimiterOptions(
-							permitLimit: 2,
-							queueProcessingOrder: QueueProcessingOrder.OldestFirst,
-							queueLimit: 10,  // try changing the limit to 0
-							window: TimeSpan.FromSeconds(5)));
+					return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
+						_ => new FixedWindowRateLimiterOptions()
+						{
+							PermitLimit = 2,
+							QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+							QueueLimit = 10,  // try changing the limit to 0
+							Window = TimeSpan.FromSeconds(5)
+						});
 				}),
 				RejectionStatusCode = 429 // Too Many Requests
 			});
